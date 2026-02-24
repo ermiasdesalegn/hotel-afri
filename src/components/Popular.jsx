@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { cities, destinations } from "../lib/data";
 
 export default function SearchList() {
@@ -7,14 +7,32 @@ export default function SearchList() {
   const scrollRef = useRef(null);
   const [cardWidth, setCardWidth] = useState(0);
 
+  const [apiHotels, setApiHotels] = useState([]);
+
+  // useEffect(() => {
+  //   if (scrollRef.current) {
+  //     const firstCard = scrollRef.current.querySelector("div");
+  //     if (firstCard) {
+  //       setCardWidth(firstCard.clientWidth + 16);
+  //     }
+  //   }
+  // }, [data]);
+
   useEffect(() => {
-    if (scrollRef.current) {
-      const firstCard = scrollRef.current.querySelector("div");
-      if (firstCard) {
-        setCardWidth(firstCard.clientWidth + 16);
+     fetch(
+      'https://api.liteapi.travel/v3.0/data/hotels?countryCode=ET&cityName=Addis%20Ababa&limit=10',
+      {
+        headers: {
+          'X-API-Key': import.meta.env.VITE_LITEAPI_KEY,
+        },
       }
-    }
-  }, [data]);
+    )
+      .then(res => res.json())
+      .then((data) => {
+        console.log('LiteAPI boom:', data.data);
+        setApiHotels(data.data || []);
+      });
+  }, []);
 
   const scroll = (direction) => {
     if (scrollRef.current && cardWidth) {
@@ -58,7 +76,7 @@ export default function SearchList() {
           ref={scrollRef}
           className="flex space-x-4 overflow-hidden snap-x snap-mandatory"
         >
-          {data.map((item) => (
+          {apiHotels.map((item) => (
             <div
               key={item.id}
               className="w-full sm:w-[80%] md:w-[50%] lg:w-[33.33%] xl:w-[25%] min-w-[300px] border rounded-lg shadow-lg flex-shrink-0 snap-start"
