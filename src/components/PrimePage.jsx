@@ -1,12 +1,11 @@
-'use client'
 import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css'; // Import the CSS for react-datepicker
+import 'react-datepicker/dist/react-datepicker.css';
 
-const PrimePage: React.FC = () => {
+const PrimePage = () => {
   const words = ["Destination", "Hotels", "Trips"];
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
-  const [checkInDate, setCheckInDate] = useState<Date | null>(null);
+  const [checkInDate, setCheckInDate] = useState(null);
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
 
   useEffect(() => {
@@ -17,7 +16,7 @@ const PrimePage: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const handleDateChange = (date: Date | null) => {
+  const handleDateChange = (date) => {
     setCheckInDate(date);
     setIsDatePickerOpen(false);
   };

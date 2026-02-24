@@ -1,15 +1,13 @@
-import React, { JSX } from 'react';
-import Image from 'next/image';
+import React from 'react';
 
-const HotDeals: React.FC = (): JSX.Element => {
+const HotDeals = () => {
   return (
     <div>
       <h2 className='mt-24 font-bold text-2xl'>Take the best Hotel Deals In AFRICA</h2>
       <div className='slides flex gap-4 mt-4 mx-auto justify-between'>
-        
-        {/* Sheraton Addis Ethiopia */}
+
         <div className='rounded-lg shadow-lg'>
-          <Image src="/assets/sheraton.jpg" alt="Sheraton Addis Ethiopia" width={350} height={250} className='rounded-t-lg'/>
+          <img src="/assets/sheraton.jpg" alt="Sheraton Addis Ethiopia" width={350} height={250} className='rounded-t-lg'/>
           <div className="p-4">
             <h3 className="text-lg font-bold">Sheraton Addis Ethiopia</h3>
             <div className='flex justify-between'>8.9 - Excellent (5230) <p>Ethiopia</p> </div>
@@ -38,9 +36,8 @@ const HotDeals: React.FC = (): JSX.Element => {
           </div>
         </div>
 
-        {/* Nairobi Hotel Kenya */}
         <div className='rounded-lg shadow-lg'>
-          <Image src="/assets/egypt.jpg" alt="Nairobi Hotel Kenya" width={350} height={250} className='rounded-t-lg'/>
+          <img src="/assets/egypt.jpg" alt="Nairobi Hotel Kenya" width={350} height={250} className='rounded-t-lg'/>
           <div className="p-4">
             <h3 className="text-lg font-bold">Nairobi Hotel Kenya</h3>
             <div className='flex justify-between'>8.9 - Excellent (5230) <p>Kenya</p> </div>
@@ -69,9 +66,8 @@ const HotDeals: React.FC = (): JSX.Element => {
           </div>
         </div>
 
-        {/* Corinthia Hotel Khartoum */}
         <div className='rounded-lg shadow-lg'>
-          <Image src="/assets/sudan.jpg" alt="Corinthia Hotel Khartoum" width={350} height={250} className='rounded-t-lg'/>
+          <img src="/assets/sudan.jpg" alt="Corinthia Hotel Khartoum" width={350} height={250} className='rounded-t-lg'/>
           <div className="p-4">
             <h3 className="text-lg font-bold">Corinthia Hotel Khartoum</h3>
             <div className='flex justify-between'>8.9 - Excellent (5230) <p>Sudan</p> </div>
@@ -103,6 +99,6 @@ const HotDeals: React.FC = (): JSX.Element => {
       </div>
     </div>
   );
-}
+};
 
 export default HotDeals;

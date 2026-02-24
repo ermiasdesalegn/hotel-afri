@@ -1,11 +1,10 @@
-'use client'
 import { useState, useRef, useEffect } from "react";
 import { cities, destinations } from "../lib/data";
 
 export default function SearchList() {
   const [activeTab, setActiveTab] = useState("cities");
   const data = activeTab === "cities" ? cities : destinations;
-  const scrollRef = useRef<HTMLDivElement | null>(null);
+  const scrollRef = useRef(null);
   const [cardWidth, setCardWidth] = useState(0);
 
   useEffect(() => {
@@ -17,7 +16,7 @@ export default function SearchList() {
     }
   }, [data]);
 
-  const scroll = (direction: "left" | "right") => {
+  const scroll = (direction) => {
     if (scrollRef.current && cardWidth) {
       const { scrollLeft } = scrollRef.current;
       const containerWidth = cardWidth * 3;
@@ -55,14 +54,13 @@ export default function SearchList() {
           ❮
         </button>
 
-        {/* Updated styles to prevent scrollbar but allow scrolling via buttons */}
-        <div 
-          ref={scrollRef} 
+        <div
+          ref={scrollRef}
           className="flex space-x-4 overflow-hidden snap-x snap-mandatory"
         >
           {data.map((item) => (
-            <div 
-              key={item.id} 
+            <div
+              key={item.id}
               className="w-full sm:w-[80%] md:w-[50%] lg:w-[33.33%] xl:w-[25%] min-w-[300px] border rounded-lg shadow-lg flex-shrink-0 snap-start"
             >
               <img src={item.image} alt={item.name} className="w-full h-40 object-cover rounded-t" />

@@ -1,17 +1,6 @@
-'use client'
 import React, { useState } from "react";
 
-interface Destination {
-  name: string;
-  prices: [number, number];
-}
-
-interface Month {
-  name: string;
-  prices: [number, number];
-}
-
-const destinations: Destination[] = [
+const destinations = [
   { name: "Addis Ababa", prices: [55, 340] },
   { name: "Ankara", prices: [80, 400] },
   { name: "Moqadisho", prices: [65, 350] },
@@ -20,7 +9,7 @@ const destinations: Destination[] = [
   { name: "South Africa", prices: [80, 355] },
 ];
 
-const months: Month[] = [
+const months = [
   { name: "January", prices: [55, 340] },
   { name: "February", prices: [55, 335] },
   { name: "March", prices: [65, 350] },
@@ -35,31 +24,26 @@ const months: Month[] = [
   { name: "December", prices: [90, 415] },
 ];
 
-const TimePrice: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<string>("Las Vegas");
-  const [selectedMonth, setSelectedMonth] = useState<string>("July");
+const TimePrice = () => {
+  const [activeTab, setActiveTab] = useState("Las Vegas");
+  const [selectedMonth, setSelectedMonth] = useState("July");
 
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
       <div
         className="bg-cover bg-center relative h-[250px] sm:h-[300px] md:h-[350px] lg:h-[400px] xl:h-[450px] rounded-xl"
         style={{
           backgroundImage: `url('/assets/africa8.jpg')`,
         }}
       >
-        {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-white"></div>
 
-        {/* Content */}
         <div className="relative z-10 px-6 py-8 md:py-12 lg:py-16">
           <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white text-center">
             Discover the best time to book your next stay
           </h1>
 
-          {/* Container */}
           <div className="bg-white rounded-xl w-full sm:w-[90%] md:w-[800px] mx-auto py-4 mt-6 sm:mt-8 md:mt-12 px-4">
-            {/* Tabs */}
             <div className="flex flex-wrap justify-center gap-2 sm:gap-4">
               {destinations.map((destination) => (
                 <button
@@ -80,7 +64,6 @@ const TimePrice: React.FC = () => {
               Prices are based on the average price range for 3-star hotels per night.
             </p>
 
-            {/* Price List */}
             <div className="bg-white bg-opacity-95 rounded-lg shadow-lg p-4 sm:p-6 max-w-full md:max-w-4xl mx-auto mt-4 sm:mt-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4">
                 {months.map((month) => (

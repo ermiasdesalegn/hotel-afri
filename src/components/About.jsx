@@ -1,14 +1,8 @@
-'use client'
-import { useState, ChangeEvent } from "react";
+import { useState } from "react";
 import React from "react";
 import { FaFacebookF, FaTwitter, FaInstagram, FaYoutube, FaLinkedinIn } from "react-icons/fa";
 
-interface Country {
-  code: string;
-  name: string;
-}
-
-const africanCountries: Country[] = [
+const africanCountries = [
   { code: "DZ", name: "Algeria" },
   { code: "AO", name: "Angola" },
   { code: "BJ", name: "Benin" },
@@ -65,9 +59,9 @@ const africanCountries: Country[] = [
 ];
 
 function About() {
-  const [selectedCountry, setSelectedCountry] = useState<string>("ET");
+  const [selectedCountry, setSelectedCountry] = useState("ET");
 
-  const handleCountryChange = (e: ChangeEvent<HTMLSelectElement>) => {
+  const handleCountryChange = (e) => {
     setSelectedCountry(e.target.value);
   };
 
@@ -77,7 +71,6 @@ function About() {
         <div className="flex flex-col md:flex-row justify-between items-center">
           <h1 className="text-2xl font-bold mb-4 md:mb-0">Afrihot</h1>
 
-          {/* Social Media Icons */}
           <div className="flex space-x-4 flex-wrap justify-center">
             {[FaFacebookF, FaTwitter, FaInstagram, FaYoutube, FaLinkedinIn].map((Icon, index) => (
               <a
@@ -107,7 +100,6 @@ function About() {
           </select>
         </div>
 
-        {/* Footer Links */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mt-8">
           <div className="flex flex-col gap-2">
             <h2 className="font-semibold">Company</h2>
