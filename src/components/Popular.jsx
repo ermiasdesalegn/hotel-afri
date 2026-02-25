@@ -9,7 +9,7 @@ export default function SearchList() {
   const [cardWidth, setCardWidth] = useState(0);
 
   const [apiHotels, setApiHotels] = useState([]);
-
+  const [location, setLocation] = useState({ lat: null, lon: null });
   // useEffect(() => {
   //   if (scrollRef.current) {
   //     const firstCard = scrollRef.current.querySelector("div");
@@ -20,6 +20,12 @@ export default function SearchList() {
   // }, [data]);
 
   useEffect(() => {
+    if (geolocation in navigator) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        lat: position.latitude;
+      });
+    }
+
     axios
       .get(
         "https://api.liteapi.travel/v3.0/data/hotels?countryCode=ET&cityName=Addis%20Ababa&limit=10",
@@ -31,6 +37,7 @@ export default function SearchList() {
       )
       .then((response) => {
         setApiHotels(response.data.data);
+        console.log(response.data.data);
       });
   }, []);
 
@@ -96,8 +103,9 @@ export default function SearchList() {
                 <h2 className="text-xl font-semibold">{item.name}</h2>
                 {/* <p>{item.hotels} Hotels</p> */}
                 <p className="text-gray-500">${item.avgPrice} Avg.</p>
-                <div>
-                  <span>{item.rating}</span>{" "}
+                <div className="text-right text-gray-600">
+                  <span>{item.rating} ⭐</span>{" "}
+                  <span>({item.reviewCount})</span>{" "}
                 </div>
               </div>
             </div>
