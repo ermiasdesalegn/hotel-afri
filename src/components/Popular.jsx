@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { cities, destinations } from "../lib/data";
 
@@ -19,18 +20,17 @@ export default function SearchList() {
   // }, [data]);
 
   useEffect(() => {
-     fetch(
-      'https://api.liteapi.travel/v3.0/data/hotels?countryCode=ET&cityName=Addis%20Ababa&limit=10',
-      {
-        headers: {
-          'X-API-Key': import.meta.env.VITE_LITEAPI_KEY,
+    axios
+      .get(
+        "https://api.liteapi.travel/v3.0/data/hotels?countryCode=ET&cityName=Addis%20Ababa&limit=10",
+        {
+          headers: {
+            "X-API-Key": import.meta.env.VITE_LITEAPI_KEY,
+          },
         },
-      }
-    )
-      .then(res => res.json())
-      .then((data) => {
-        console.log('LiteAPI boom:', data.data);
-        setApiHotels(data.data || []);
+      )
+      .then((response) => {
+        setApiHotels(response.data.data);
       });
   }, []);
 
@@ -40,9 +40,15 @@ export default function SearchList() {
       const containerWidth = cardWidth * 3;
 
       if (direction === "left") {
-        scrollRef.current.scrollTo({ left: scrollLeft - containerWidth, behavior: "smooth" });
+        scrollRef.current.scrollTo({
+          left: scrollLeft - containerWidth,
+          behavior: "smooth",
+        });
       } else {
-        scrollRef.current.scrollTo({ left: scrollLeft + containerWidth, behavior: "smooth" });
+        scrollRef.current.scrollTo({
+          left: scrollLeft + containerWidth,
+          behavior: "smooth",
+        });
       }
     }
   };
@@ -81,7 +87,11 @@ export default function SearchList() {
               key={item.id}
               className="w-full sm:w-[80%] md:w-[50%] lg:w-[33.33%] xl:w-[25%] min-w-[300px] border rounded-lg shadow-lg flex-shrink-0 snap-start"
             >
-              <img src={item.image} alt={item.name} className="w-full h-40 object-cover rounded-t" />
+              <img
+                src={item.image}
+                alt={item.name}
+                className="w-full h-40 object-cover rounded-t"
+              />
               <div className="p-4">
                 <h2 className="text-xl font-semibold">{item.name}</h2>
                 <p>{item.hotels} Hotels</p>
