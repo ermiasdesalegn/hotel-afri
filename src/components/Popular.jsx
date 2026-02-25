@@ -88,14 +88,17 @@ export default function SearchList() {
               className="w-full sm:w-[80%] md:w-[50%] lg:w-[33.33%] xl:w-[25%] min-w-[300px] border rounded-lg shadow-lg flex-shrink-0 snap-start"
             >
               <img
-                src={item.image}
+                src={item.main_photo}
                 alt={item.name}
                 className="w-full h-40 object-cover rounded-t"
               />
               <div className="p-4">
                 <h2 className="text-xl font-semibold">{item.name}</h2>
-                <p>{item.hotels} Hotels</p>
+                {/* <p>{item.hotels} Hotels</p> */}
                 <p className="text-gray-500">${item.avgPrice} Avg.</p>
+                <div>
+                  <span>{item.rating}</span>{" "}
+                </div>
               </div>
             </div>
           ))}
