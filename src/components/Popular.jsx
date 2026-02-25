@@ -2,11 +2,14 @@ import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { cities, destinations } from "../lib/data";
 
+
 export default function SearchList() {
   const [activeTab, setActiveTab] = useState("cities");
   const data = activeTab === "cities" ? cities : destinations;
   const scrollRef = useRef(null);
   const [cardWidth, setCardWidth] = useState(0);
+const [cityName, setCityName] = useState(null);
+const [countryCode, setCountryCode] = useState(null);
 
   const [apiHotels, setApiHotels] = useState([]);
   const [location, setLocation] = useState({ lat: null, lon: null });
@@ -20,26 +23,49 @@ export default function SearchList() {
   // }, [data]);
 
   useEffect(() => {
-    if (geolocation in navigator) {
+    if (!("geolocation" in navigator)) return;
+     
       navigator.geolocation.getCurrentPosition((position) => {
-        lat: position.latitude;
+        setLocation({ lat: position.coords.latitude, lon: position.coords.longitude });
+        // console.log(position.coords.latitude)
       });
+     
+    err=>{
+      console.error("Error getting location:", err);
     }
 
-    axios
-      .get(
-        "https://api.liteapi.travel/v3.0/data/hotels?countryCode=ET&cityName=Addis%20Ababa&limit=10",
-        {
-          headers: {
-            "X-API-Key": import.meta.env.VITE_LITEAPI_KEY,
-          },
-        },
-      )
-      .then((response) => {
-        setApiHotels(response.data.data);
-        console.log(response.data.data);
-      });
   }, []);
+
+  useEffect(() => {
+    if (!location.lat || !location.lon) return;
+    const url = `https://us1.api-bdc.net/data/reverse-geocode-client?latitude=${location.lat}&longitude=${location.lon}`;
+
+    axios
+    .get(url)
+    .then((res) => {
+      const city = res.data.locality || res.data.city || res.data.principalSubdivision || "";
+      const code = (res.data.countryCode || "").toUpperCase();
+      setCityName(city);
+      setCountryCode(code);
+      console.log(city, code);
+    })
+    .catch((err) => console.warn("Nominatim error:", err));
+}, [location.lat, location.lon]);
+
+
+useEffect(() => {
+  if (!cityName || !countryCode) return;
+
+  axios
+    .get("https://api.liteapi.travel/v3.0/data/hotels", {
+      params: { countryCode, cityName, limit: 10 },
+      headers: { "X-API-Key": import.meta.env.VITE_LITEAPI_KEY },
+    })
+    .then((response) => {
+      setApiHotels(response.data.data || []);
+    })
+    .catch((err) => console.warn("LiteAPI error:", err));
+}, [cityName, countryCode]);
 
   const scroll = (direction) => {
     if (scrollRef.current && cardWidth) {
